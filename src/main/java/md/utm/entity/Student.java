@@ -6,12 +6,14 @@ public class Student {
   private String fistName;
   private String lastName;
   private String email;
+  private float media;
 
-  public Student(String idnp, String fistName, String lastName, String email) {
+  public Student(String idnp, String fistName, String lastName, String email, float media) {
     this.idnp = idnp;
     this.fistName = fistName;
     this.lastName = lastName;
     this.email = email;
+    this.media = media;
   }
 
   public String getIdnp() {
@@ -46,6 +48,14 @@ public class Student {
     this.email = email;
   }
 
+  public float getMedia() {
+    return media;
+  }
+
+  public void setMedia(float media) {
+    this.media = media;
+  }
+
   @Override
   public String toString() {
     return "Student{" +
@@ -53,6 +63,7 @@ public class Student {
         ", fistName='" + fistName + '\'' +
         ", lastName='" + lastName + '\'' +
         ", email='" + email + '\'' +
+        ", media='" + media + '\'' +
         '}';
   }
 }

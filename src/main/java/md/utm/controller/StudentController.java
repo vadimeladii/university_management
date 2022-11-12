@@ -1,54 +1,56 @@
 package md.utm.controller;
 
-import com.google.common.collect.Lists;
 import java.util.List;
 import md.utm.entity.Student;
+import md.utm.repository.StudentRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("student")
 public class StudentController {
 
-  public static List<Student> studentList = Lists.newArrayList(
-      new Student("2012031536710", "Test", "test", "test@gmail.com"),
-      new Student("2012031536711", "Test1", "test2", "test1@gmail.com"),
-      new Student("2012031536712", "Test2", "test3", "tes2@gmail.com")
-  );
-
-//  static {
-//    List<Student> studentList = new ArrayList();
-//    studentList.add(new Student("2012031536710", "Test", "test", "test@gmail.com"));
-//    studentList.add(new Student("2012031536711", "Test1", "test2", "test1@gmail.com"));
-//    studentList.add(new Student("2012031536712", "Test2", "test3", "tes2@gmail.com"));
-//  }
-
-//  queryParam /student?name=test
-//  pathParam /student/2012035464342
-//  body {}
+  @Autowired
+  private StudentRepository studentRepository;
 
   @GetMapping
   public List<Student> getAll() {
-    return studentList;
+    return studentRepository.findAll();
   }
 
   @GetMapping("/{idnp}")
   public Student getByIdnp(@PathVariable String idnp) {
-    for (Student s: studentList) {
-      if(s.getIdnp().equals(idnp)) {
-        return s;
-      }
-    }
-    return null;
+    return studentRepository.findByIdnp(idnp);
+  }
+
+  @GetMapping("greaterThan")
+  public List<Student> getGreaterThan(@RequestParam float media) {
+    return studentRepository.findGreaterThan(media);
   }
 
   @PostMapping
-  public Student createStudent(@RequestBody Student student) {
-      studentList.add(student);
-      return student;
+  @ResponseStatus(HttpStatus.CREATED)
+  public void save(@RequestBody Student student) {
+      studentRepository.save(student);
+  }
+
+  @PutMapping("/{idnp}")
+  public void update(@PathVariable String idnp, @RequestBody Student student) {
+    studentRepository.update(idnp, student);
+  }
+
+  @DeleteMapping("/{idnp}")
+  public void delete(@PathVariable String idnp) {
+    studentRepository.delete(idnp);
   }
 }
