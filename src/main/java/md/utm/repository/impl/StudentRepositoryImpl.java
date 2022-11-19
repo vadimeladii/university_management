@@ -16,9 +16,9 @@ public class StudentRepositoryImpl implements StudentRepository {
   @Override
   public void save(Student student) {
     jdbcTemplate.update(
-        "insert into student values (?, ?, ?, ?, ?)",
+        "insert into student values (?, ?, ?, ?, ?, ?)",
         student.getIdnp(), student.getFistName(), student.getLastName(),
-        student.getEmail(), student.getMedia());
+        student.getEmail(), student.getMedia(), student.getUniversityId());
   }
 
   @Override
@@ -29,7 +29,8 @@ public class StudentRepositoryImpl implements StudentRepository {
             student.getString("first_name"),
             student.getString("last_name"),
             student.getString("email"),
-            student.getFloat("media")
+            student.getFloat("media"),
+            student.getInt("university_id")
         ));
   }
 
@@ -43,7 +44,8 @@ public class StudentRepositoryImpl implements StudentRepository {
             student.getString("first_name"),
             student.getString("last_name"),
             student.getString("email"),
-            student.getFloat("media")
+            student.getFloat("media"),
+            student.getInt("university_id")
         ));
   }
 
@@ -57,15 +59,16 @@ public class StudentRepositoryImpl implements StudentRepository {
             student.getString("first_name"),
             student.getString("last_name"),
             student.getString("email"),
-            student.getFloat("media")
+            student.getFloat("media"),
+            student.getInt("university_id")
         ));
   }
 
   @Override
   public void update(String idnp, Student student) {
     jdbcTemplate.update(
-        "update student set first_name = ?, last_name = ?, email = ?, media = ? where idnp = ?",
-        student.getFistName(), student.getLastName(), student.getEmail(), student.getMedia(), idnp);
+        "update student set first_name = ?, last_name = ?, email = ?, media = ?, university_id = ?  where idnp = ?",
+        student.getFistName(), student.getLastName(), student.getEmail(), student.getMedia(), student.getUniversityId(), idnp);
   }
 
   @Override

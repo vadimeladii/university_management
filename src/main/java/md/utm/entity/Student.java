@@ -7,13 +7,16 @@ public class Student {
   private String lastName;
   private String email;
   private float media;
+  private Integer universityId;
 
-  public Student(String idnp, String fistName, String lastName, String email, float media) {
+  public Student(String idnp, String fistName, String lastName,
+      String email, float media, Integer universityId) {
     this.idnp = idnp;
     this.fistName = fistName;
     this.lastName = lastName;
     this.email = email;
     this.media = media;
+    this.universityId = universityId;
   }
 
   public String getIdnp() {
@@ -56,6 +59,14 @@ public class Student {
     this.media = media;
   }
 
+  public Integer getUniversityId() {
+    return universityId;
+  }
+
+  public void setUniversityId(Integer universityId) {
+    this.universityId = universityId;
+  }
+
   @Override
   public String toString() {
     return "Student{" +
@@ -64,6 +75,7 @@ public class Student {
         ", lastName='" + lastName + '\'' +
         ", email='" + email + '\'' +
         ", media='" + media + '\'' +
+        ", universityId='" + universityId + '\'' +
         '}';
   }
 }
