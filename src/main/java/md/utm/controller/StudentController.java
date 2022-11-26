@@ -2,7 +2,7 @@ package md.utm.controller;
 
 import java.util.List;
 import md.utm.entity.Student;
-import md.utm.repository.StudentRepository;
+import md.utm.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -20,39 +20,37 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("student")
 public class StudentController {
 
-//  REST API (CRUD)
-
   @Autowired
-  private StudentRepository studentRepository;
+  private StudentService studentService;
 
   @GetMapping
   public List<Student> getAll() {
-    return studentRepository.findAll();
+    return studentService.findAll();
   }
 
   @GetMapping("/{idnp}")
   public Student getByIdnp(@PathVariable String idnp) {
-    return studentRepository.findByIdnp(idnp);
+    return studentService.findByIdnp(idnp);
   }
 
   @GetMapping("greaterThan")
   public List<Student> getGreaterThan(@RequestParam float media) {
-    return studentRepository.findGreaterThan(media);
+    return studentService.findGreaterThan(media);
   }
 
   @PostMapping
   @ResponseStatus(HttpStatus.CREATED)
   public void save(@RequestBody Student student) {
-      studentRepository.save(student);
+      studentService.save(student);
   }
 
   @PutMapping("/{idnp}")
   public void update(@PathVariable String idnp, @RequestBody Student student) {
-    studentRepository.update(idnp, student);
+    studentService.update(idnp, student);
   }
 
   @DeleteMapping("/{idnp}")
   public void delete(@PathVariable String idnp) {
-    studentRepository.delete(idnp);
+    studentService.delete(idnp);
   }
 }

@@ -37,7 +37,6 @@ public class StudentRepositoryImpl implements StudentRepository {
   @Override
   public Student findByIdnp(String idnp) {
     return jdbcTemplate.queryForObject("select * from student where idnp = ?",
-        new Object[]{idnp},
         (student, rowNum) ->
         new Student(
             student.getString("idnp"),
@@ -46,13 +45,12 @@ public class StudentRepositoryImpl implements StudentRepository {
             student.getString("email"),
             student.getFloat("media"),
             student.getInt("university_id")
-        ));
+        ), idnp);
   }
 
   @Override
   public List<Student> findGreaterThan(float media) {
     return jdbcTemplate.query("select * from student where media > ?",
-        new Object[]{media},
         (student, rowNum) ->
         new Student(
             student.getString("idnp"),
@@ -61,7 +59,7 @@ public class StudentRepositoryImpl implements StudentRepository {
             student.getString("email"),
             student.getFloat("media"),
             student.getInt("university_id")
-        ));
+        ), media);
   }
 
   @Override
@@ -75,5 +73,13 @@ public class StudentRepositoryImpl implements StudentRepository {
   public void delete(String idnp) {
     jdbcTemplate.update(
         "delete from student where idnp = ?", idnp);
+  }
+
+  @Override
+  public boolean studentExist(String idnp) {
+    Integer count = jdbcTemplate.queryForObject("select count(*) from student where idnp = ?",
+        Integer.class, idnp);
+
+    return count > 0;
   }
 }

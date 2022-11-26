@@ -1,11 +1,9 @@
-package md.utm.repository;
+package md.utm.service;
 
 import java.util.List;
 import md.utm.entity.Student;
 
-public interface StudentRepository {
-
-  void save(Student student);
+public interface StudentService {
 
   List<Student> findAll();
 
@@ -13,9 +11,9 @@ public interface StudentRepository {
 
   List<Student> findGreaterThan(float media);
 
+  void save(Student student);
+
   void update(String idnp, Student student);
 
   void delete(String idnp);
-
-  boolean studentExist(String idnp);
 }
